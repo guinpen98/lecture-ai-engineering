@@ -154,6 +154,15 @@ async def health_check():
 
     return {"status": "ok", "model": config.MODEL_NAME}
 
+@app.get("/hello")
+async def hello():
+    """ハローが返ってくるエンドポイント"""
+    global model
+    if model is None:
+        return {"status": "error", "message": "error"}
+
+    return {"status": "ok", "message": "Hello!"}
+
 # 簡略化されたエンドポイント
 @app.post("/generate", response_model=GenerationResponse)
 async def generate_simple(request: SimpleGenerationRequest):
